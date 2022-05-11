@@ -21,8 +21,5 @@ let package = Package(
         .target(
             name: "TagEditField",
             dependencies: []),
-        .testTarget(
-            name: "TagEditFieldTests",
-            dependencies: ["TagEditField"]),
     ]
 )
