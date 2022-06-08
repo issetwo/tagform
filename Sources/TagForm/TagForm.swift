@@ -20,7 +20,7 @@ public struct TagForm: View {
     @State private var inputLabel = ""
     
     /* 初期化 */
-    init(tagInfoList: Binding<[TagInfo]>,
+    public init(tagInfoList: Binding<[TagInfo]>,
          placeholder: String = "Input here...",
          tagColer: Color = .black,
          textColor: Color = .white ) {
