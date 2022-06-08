@@ -1,5 +1,5 @@
 //
-//  TagEditField.swift
+//  TagForm.swift
 //  Docanner
 //
 //  Created by Kazuto Yamada on 2022/02/02.
@@ -10,7 +10,7 @@ import SwiftUI
 /// タグ編集フィールド
 @available(macOS 11.0, *)
 @available(iOS 14.0, *)
-public struct TagEditField: View {
+public struct TagForm: View {
     /* バインディング */
     @Binding public var list: [TagInfo]
     /* 変数 */
@@ -134,12 +134,12 @@ public class TagInfo: ObservableObject, Identifiable {
 /// プレビュー：タグ編集フィールド
 @available(macOS 11.0, *)
 @available(iOS 14.0, *)
-struct TagEditField_Previews: PreviewProvider {
+struct TagForm_Previews: PreviewProvider {
     @State static var tagInfoList: [TagInfo] = [.init(label: "Work", color: .red),
                                                 .init(label: "School", color: .orange),
                                                 .init(label: "Private", color: .yellow)]
 
     static var previews: some View {
-        TagEditField(list: $tagInfoList, placeholder: "Input here...", tagColer: .black)
+        TagForm(list: $tagInfoList, placeholder: "Input here...", tagColer: .black)
     }
 }
