@@ -12,12 +12,23 @@ import SwiftUI
 @available(iOS 14.0, *)
 public struct TagForm: View {
     /* バインディング */
-    @Binding public var list: [TagInfo]
+    @Binding private var tagInfoList: [TagInfo]
     /* 変数 */
-    public var placeholder: String = "Input here..."
-    public var tagColer: Color = .black
-    public var textColor: Color = .white
+    private var placeholder: String = "Input here..."
+    private var tagColer: Color = .black
+    private var textColor: Color = .white
     @State private var inputLabel = ""
+    
+    /* 初期化 */
+    init(tagInfoList: Binding<[TagInfo]>,
+         placeholder: String = "Input here...",
+         tagColer: Color = .black,
+         textColor: Color = .white ) {
+        self._tagInfoList = tagInfoList
+        self.placeholder = placeholder
+        self.tagColer = tagColer
+        self.textColor = textColor
+    }
     
     /* Body */
     public var body: some View {
@@ -25,7 +36,7 @@ public struct TagForm: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     /* タグ表示 */
-                    ForEach(list) { tag in
+                    ForEach(tagInfoList) { tag in
                         Tag(tagInfo: tag, textColor: textColor, onDelete: {
                             /* 削除ボタン押下時の処理 */
                             deleteTag(tag: tag)
@@ -48,7 +59,7 @@ public struct TagForm: View {
                     }
                 }
             }
-            .animation(.spring(), value: list.count)
+            .animation(.spring(), value: tagInfoList.count)
         }
     }
     
@@ -56,8 +67,8 @@ public struct TagForm: View {
     /// - Parameter label: タグ表示文字
     private func appendTag(label: String) {
         if label != "" {
-            if list.contains(where: {$0.label == label}) == false {
-                list.append(.init(id: UUID(), label: label, color: tagColer))
+            if tagInfoList.contains(where: {$0.label == label}) == false {
+                tagInfoList.append(.init(id: UUID(), label: label, color: tagColer))
             }
         }
         inputLabel = ""
@@ -66,7 +77,7 @@ public struct TagForm: View {
     /// タグの削除
     /// - Parameter tag: タグ情報
     private func deleteTag(tag: TagInfo) {
-        list.removeAll(where: {$0.id == tag.id})
+        tagInfoList.removeAll(where: {$0.id == tag.id})
     }
 }
 
@@ -140,6 +151,6 @@ struct TagForm_Previews: PreviewProvider {
                                                 .init(label: "Private", color: .yellow)]
 
     static var previews: some View {
-        TagForm(list: $tagInfoList, placeholder: "Input here...", tagColer: .black)
+        TagForm(tagInfoList: $tagInfoList, placeholder: "Input here...", tagColer: .black)
     }
 }
