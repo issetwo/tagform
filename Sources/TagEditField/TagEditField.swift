@@ -8,49 +8,47 @@
 import SwiftUI
 
 /// タグ編集フィールド
-@available(iOS 13.0, *)
+@available(macOS 11.0, *)
+@available(iOS 14.0, *)
 public struct TagEditField: View {
     /* バインディング */
     @Binding public var list: [TagInfo]
     /* 変数 */
     public var placeholder: String = "Input here..."
-    public var defaultTagColer: Color = .black
+    public var tagColer: Color = .black
     public var textColor: Color = .white
     @State private var inputLabel = ""
     
     /* Body */
     public var body: some View {
-        if #available(iOS 14.0, *) {
-            ScrollViewReader { scrollView in
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        /* タグ表示 */
-                        ForEach(list) { tag in
-                            TagLabel(tagInfo: tag, textColor: textColor, onDelete: {
-                                /* 削除ボタン押下時の処理 */
-                                deleteTag(tag: tag)
-                            })
-                        }
-                        
-                        /* テキスト入力表示 */
-                        TextField(placeholder, text: $inputLabel, onCommit: {
-                            /* Enter確定後の処理 */
-                            appendTag(label: inputLabel)
+        ScrollViewReader { scrollView in
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    /* タグ表示 */
+                    ForEach(list) { tag in
+                        Tag(tagInfo: tag, textColor: textColor, onDelete: {
+                            /* 削除ボタン押下時の処理 */
+                            deleteTag(tag: tag)
                         })
-                        .id("TextField")
-                        /* 入力イベント処理 */
-                        .onChange(of: inputLabel) { change in
-                            /* スクロールアニメーション */
-                            withAnimation {
-                                scrollView.scrollTo("TextField")
-                            }
+                    }
+                    
+                    /* テキスト入力表示 */
+                    TextField(placeholder, text: $inputLabel, onCommit: {
+                        /* Enter確定後の処理 */
+                        appendTag(label: inputLabel)
+                    })
+                    .id("TextField")
+                    .textFieldStyle(.plain)
+                    /* 入力イベント処理 */
+                    .onChange(of: inputLabel) { change in
+                        /* スクロールアニメーション */
+                        withAnimation {
+                            scrollView.scrollTo("TextField")
                         }
                     }
                 }
-                .animation(.spring(), value: list.count)
             }
-        } else {
-            // Fallback on earlier versions
+            .animation(.spring(), value: list.count)
         }
     }
     
@@ -59,7 +57,7 @@ public struct TagEditField: View {
     private func appendTag(label: String) {
         if label != "" {
             if list.contains(where: {$0.label == label}) == false {
-                list.append(.init(id: UUID(), label: label, color: defaultTagColer))
+                list.append(.init(id: UUID(), label: label, color: tagColer))
             }
         }
         inputLabel = ""
@@ -73,8 +71,9 @@ public struct TagEditField: View {
 }
 
 /// タグ
-@available(iOS 13.0, *)
-public struct TagLabel: View {
+@available(macOS 11.0, *)
+@available(iOS 14.0, *)
+public struct Tag: View {
     /* 変数 */
     @ObservedObject public var tagInfo: TagInfo
     public var textColor: Color = .white
@@ -94,6 +93,7 @@ public struct TagLabel: View {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundColor(textColor)
                 }
+                .buttonStyle(.plain)
             }
             .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 5))
             .background(tagInfo.color)
@@ -103,7 +103,8 @@ public struct TagLabel: View {
 }
 
 /// タグ情報クラス
-@available(iOS 13.0, *)
+@available(macOS 11.0, *)
+@available(iOS 14.0, *)
 public class TagInfo: ObservableObject, Identifiable {
     /* 表示情報 */
     @Published public var id: UUID = UUID()
@@ -131,17 +132,14 @@ public class TagInfo: ObservableObject, Identifiable {
 
 
 /// プレビュー：タグ編集フィールド
-@available(iOS 13.0, *)
+@available(macOS 11.0, *)
+@available(iOS 14.0, *)
 struct TagEditField_Previews: PreviewProvider {
-    @State static var tagInfoList: [TagInfo] = [TagInfo]()
-    
-    /*init(){
-        TagEditField_Previews.tagInfoList.append(.init(label: "仕事", color: .red))
-        TagEditField_Previews.tagInfoList.append(.init(label: "学校", color: .orange))
-        TagEditField_Previews.tagInfoList.append(.init(label: "部活", color: .yellow))
-    }*/
+    @State static var tagInfoList: [TagInfo] = [.init(label: "Work", color: .red),
+                                                .init(label: "School", color: .orange),
+                                                .init(label: "Private", color: .yellow)]
 
     static var previews: some View {
-        TagEditField(list: $tagInfoList, placeholder: "タグを追加...", defaultTagColer: .black)
+        TagEditField(list: $tagInfoList, placeholder: "Input here...", tagColer: .black)
     }
 }
