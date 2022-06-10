@@ -1,11 +1,11 @@
 # TagForm
-> Short blurb about what your product does.
+> Tag input form for SwiftUI.
 
 [![Swift Version][swift-image]][swift-url]
 [![Build Status][travis-image]][travis-url]
 [![License][license-image]][license-url]
 
-One to two paragraph statement about your product and what it does.
+Please refer to the following for how to use.
 
 ![](screenshot.gif)
 
@@ -25,7 +25,7 @@ let package = Package(
 
 ## Usage example
 
-
+### Empty tag input form
 ```swift
 import SwiftUI
 import TagForm
@@ -40,6 +40,7 @@ struct ContentView: View {
 }
 ```
 
+### Set one or more tags
 ```swift
 import SwiftUI
 import TagForm
