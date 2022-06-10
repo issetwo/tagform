@@ -4,6 +4,8 @@
 [![Build Status][travis-image]][travis-url]
 [![License][license-image]][license-url]
 
+Tag input form for SwiftUI.
+
 ![](screenshot.gif)
 
 ## Table of Contents
