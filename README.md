@@ -1,27 +1,43 @@
 # TagForm
-> Tag input form for SwiftUI.
 
 [![Swift Version][swift-image]][swift-url]
 [![Build Status][travis-image]][travis-url]
 [![License][license-image]][license-url]
 
-Please refer to the following for how to use.
-
 ![](screenshot.gif)
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage example](#usage-example)
+- [Release History](#release-history)
+- [Meta](#meta)
 
 ## Installation
 
-Add this project on your `Package.swift`
+### Swift Package Manager (Recommended)
+
+#### Package
+
+You can add this package to `Package.swift`, include it in your target dependencies.
 
 ```swift
-import PackageDescription
-
 let package = Package(
     dependencies: [
-        .Package(url: "https://github.com/issetwo/tagform.git", majorVersion: 0, minor: 0)
+        .package(url: "https://github.com/issetwo/tagform"),
+    ],
+    targets: [
+        .target(
+            name: "TagForm",
+            dependencies: []),
     ]
 )
 ```
+
+#### Xcode
+
+You can add this package on Xcode.
+See [documentation](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app).
 
 ## Usage example
 
@@ -57,17 +73,9 @@ struct ContentView: View {
 }
 ```
 
-## Development setup
-
-Describe how to install all development dependencies and how to run an automated test-suite of some kind. Potentially do this for multiple platforms.
-
-```sh
-make install
-```
-
 ## Release History
 
-* 0.0.1
+* 0.1.0
     * Work in progress
 
 ## Meta
