@@ -40,6 +40,21 @@ struct ContentView: View {
 }
 ```
 
+```swift
+import SwiftUI
+import TagForm
+
+struct ContentView: View {
+    @State private var tagInfoList: [TagInfo] = [.init(label: "Work", color: .red),
+                                                .init(label: "School", color: .orange),
+                                                .init(label: "Private", color: .yellow)]
+    
+    var body: some View {
+        TagForm(tagInfoList: $tagInfoList, placeholder: "Input here...", tagColer: .black)
+            .padding()
+    }
+}
+```
 
 ## Development setup
 
